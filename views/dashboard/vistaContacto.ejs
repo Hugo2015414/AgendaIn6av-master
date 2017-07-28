@@ -1,0 +1,177 @@
+<% include layout %>
+ <div class="row">
+  <div class="page-header">
+    <h1>Contacto</h1>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <h2>Lista de contactos</h2>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Apellido</th>
+          <th>Nombre</th>
+          <th>Direccion</th>
+          <th>Telefono</th>
+          <th>Correo</th>
+        </tr>
+      </thead>
+      <tbody data-bind="foreach: contactos">
+        <tr>
+          <td data-bind="text: apellido"></td>
+          <td data-bind="text: nombre"></td>
+          <td data-bind="text: direccion"></td>
+          <td data-bind="text: telefono"></td>
+          <td data-bind="text: correo"></td>
+          <td>
+							<div class="btn-group">
+								<button class="btn btn-warning"
+										data-toggle="modal"
+										data-target="#modalEditar"
+										data-bind="click: $root.cargar">
+									Editar
+								</button>
+								<button class="btn btn-danger"
+										data-bind="click: $root.eliminar">
+									Eliminar
+								</button>
+							</div>
+						</td>
+        </tr>
+      </tbody>
+    </table>
+    <button type="button" class="btn btn-primary"
+				data-toggle="modal"
+				data-target="#modalAgregar">
+			Agregar
+		</button>
+  </div>
+</div>
+
+<!--Modal AGREGAR-->
+<div class="modal fade" id="modalAgregar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<form data-bind="submit: agregar" id="form-contacto">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">Agregar Contacto</h4>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label for="inputNombre">Nombre</label>
+						<input type="text"
+							   class="form-control"
+							   name="inputNombre"
+							   id="inputNombre"
+                 data-bind="value: contactoNuevo.nombre"/>
+					</div>
+          <div class="form-group">
+						<label for="inputApellido">Apellido</label>
+						<input type="text"
+							   class="form-control"
+							   name="inputApellido"
+							   id="inputApellido"
+                 data-bind="value: contactoNuevo.apellido" />
+					</div>
+					<div class="form-group">
+						<label for="inputDireccion">Direccion</label>
+						<input type="text"
+							   class="form-control"
+							   name="inputDireccion"
+							   id="inputDireccion"
+                 data-bind="value: contactoNuevo.direccion"/>
+					</div>
+					<div class="form-group">
+						<label for="inputTelefono">Telefono</label>
+						<input type="text"
+							   class="form-control"
+							   name="inputTelefono"
+							   id="inputTelefono"
+                 data-bind="value: contactoNuevo.telefono"/>
+					</div>
+					<div class="form-group">
+						<label for="inputCorreo">Correo</label>
+						<input type="text"
+							   class="form-control"
+							   name="inputCorreo"
+							   id="inputCorreo"
+                 data-bind="value: contactoNuevo.correo"/>
+					</div>
+          <div class="form-group">
+						<label for="selectCategoria">Categoria</label>
+						<select class="form-control" data-bind="options: categorias,
+								optionsText: 'nombreCategoria',
+								value: categoriaDeContacto.categoria"></select>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+					<button type="submit" class="btn btn-primary">Guardar</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<!--Fin AGREGAR-->
+<!--Modal EDITAR-->
+<div class="modal fade" id="modalEditar" tabindex="-1" role="dialog"
+	 aria-labelledby="myModalLabel" data-bind="if: contactoCargado">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<form data-bind="submit: editar">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="myModalLabel">Editar Contacto</h4>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label for="inputId">Id</label>
+						<input type="text" class="form-control" name="inputId" id="inputId"
+							   data-bind="value: contactoCargado().idContacto" disabled />
+					</div>
+					<div class="form-group">
+						<label for="inputNombre">Nombre</label>
+						<input type="text" class="form-control" name="inputNombre" id="inputNombre"
+							   data-bind="value: contactoCargado().nombre" />
+					</div>
+					<div class="form-group">
+						<label for="inputApellido">Apellido</label>
+						<input type="text" class="form-control" name="inputApellido" id="inputApellido"
+							   data-bind="value: contactoCargado().apellido" />
+					</div>
+					<div class="form-group">
+						<label for="inputDireccion">Direccion</label>
+						<input type="text" class="form-control" name="inputDireccion" id="inputDireccion"
+							   data-bind="value: contactoCargado().direccion" />
+					</div>
+					<div class="form-group">
+						<label for="inputTelefono">Telefono</label>
+						<input type="text" class="form-control" name="inputTelefono" id="inputTelefono"
+							   data-bind="value: contactoCargado().telefono" />
+					</div>
+					<div class="form-group">
+						<label for="inputCorreo">Correo</label>
+						<input type="text" class="form-control" name="inputCorreo" id="inputCorreo"
+							   data-bind="value: contactoCargado().correo" />
+					</div>
+					<div class="form-group">
+						<label for="selectCategoria">Categoria</label>
+						<select class="form-control"
+								data-bind="options: categorias, optionsText: 'nombreCategoria', value: contactoCargado().categoria"></select>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="submit" class="btn btn-primary">Editar</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<!--Fin EDITAR-->
+
+<% include footer %>
+<script src="/javascripts/contactoCliente.js"></script>

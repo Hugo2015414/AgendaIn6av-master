@@ -1,0 +1,123 @@
+<% include layout %>
+ <div class="row">
+  <div class="page-header">
+    <h1>Tareas</h1>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <h2>Lista de tareas</h2>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Descripcion</th>
+          <th>Fecha</th>
+        </tr>
+      </thead>
+      <tbody data-bind="foreach: tareas">
+        <tr>
+          <td data-bind="text: idTarea"></td>
+          <td data-bind="text: descripcion"></td>
+          <td data-bind="text: fecha"></td>
+          <td>
+							<div class="btn-group">
+								<button class="btn btn-warning"
+										data-toggle="modal"
+										data-target="#modalEditar"
+										data-bind="click: $root.cargar">
+									Editar
+								</button>
+								<button class="btn btn-danger"
+										data-bind="click: $root.eliminar">
+									Eliminar
+								</button>
+							</div>
+						</td>
+        </tr>
+      </tbody>
+    </table>
+    <button type="button" class="btn btn-primary"
+				data-toggle="modal"
+				data-target="#modalAgregar">
+			Agregar
+		</button>
+  </div>
+</div>
+
+<!--Modal AGREGAR-->
+<div class="modal fade" id="modalAgregar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<form data-bind="submit: agregar" id="form-tarea">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">Agregar Tarea</h4>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label for="inputDescripcion">Descripcion</label>
+						<input type="text"
+							   class="form-control"
+							   name="inputDescripcion"
+							   id="inputDescripcion"
+                 data-bind="value: tareaNueva.descripcion"/>
+					</div>
+          <div class="form-group">
+						<label for="inputFecha">Fecha</label>
+						<input type="date"
+							   class="form-control"
+							   name="inputFecha"
+							   id="inputFecha"
+                 data-bind="value: tareaNueva.fecha"/>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+					<button type="submit" class="btn btn-primary">Guardar</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<!--Fin AGREGAR-->
+<!--Modal EDITAR-->
+<div class="modal fade" id="modalEditar" tabindex="-1" role="dialog"
+	 aria-labelledby="myModalLabel" data-bind="if: tareaCargada">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<form data-bind="submit: editar">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="myModalLabel">Editar Tarea</h4>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label for="inputId">Id</label>
+						<input type="text" class="form-control" name="inputId" id="inputId"
+							   data-bind="value: tareaCargada().idTarea" disabled />
+					</div>
+					<div class="form-group">
+						<label for="inputDescripcion">Descripcion</label>
+						<input type="text" class="form-control" name="inputDescripcion" id="inputDescripcion"
+							   data-bind="value: tareaCargada().descripcion" />
+					</div>
+          <div class="form-group">
+						<label for="inputFecha">Fecha</label>
+						<input type="date" class="form-control" name="inputFecha" id="inputFecha"
+							   data-bind="value: tareaCargada().fecha" />
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="submit" class="btn btn-primary">Editar</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<!--Fin EDITAR-->
+
+<% include footer %>
+<script src="/javascripts/tareaCliente.js"></script>
